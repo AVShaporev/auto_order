@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 import sys
-# print(sys.argv)
+
 app = QtWidgets.QApplication(sys.argv)
 window = QtWidgets.QWidget()
 window.setWindowTitle('First proramm')
