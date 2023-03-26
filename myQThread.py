@@ -6,7 +6,7 @@ class MyThread(QtCore.QThread):
         QtCore.QThread.__init__(self, parent)
     def run(self):
         for i in range(1, 21):
-            self.sleep(3)                   #сон на 3 сек
+            self.msleep(300)                   #сон на 3 сек
             # передачяа данных из потока через сигнал
             self.mysignal.emit(f'i = {i}')
 
