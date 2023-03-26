@@ -10,18 +10,16 @@ con.setDatabaseName('data.sqlite')
 con.open()
 
 query = QtSql.QSqlQuery()
-query.prepare("\
-    insert into good values(\
-        null, :goodname, :goodcount)\
-")
+query.exec("select * from good order by goodname")
+lst =[]
 
-lst1 = ['Бумага', 'Карандаш', 'Картирдж', 'Линейка', 'Ручка']
-lst2 = [250, 50, 2500, 100, 75]
-
-query.bindValue(':goodname', lst1)
-query.bindValue(':goodcount', lst2)
-
-query.execBatch()
-
+if query.isActive():
+    query.first()
+    while query.isValid():
+        lst.append(str(query.value('goodname')) + '-' + str(query.value('goodcount')))
+        query.next()
+    
+    for p in lst: print(p)
 
 con.close()
+ 

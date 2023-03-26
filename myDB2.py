@@ -1,25 +1,28 @@
 from PyQt5 import QtWidgets, QtSql
 import sys
 
-# созлание объекта приложения - обязательно перед открытием базы данных, инча поддержка БД работать не будет
+# созлание объекта приложения - обязательно перед открытием базы данных, иначе поддержка БД работать не будет
 app = QtWidgets.QApplication(sys.argv)
 
 # открытие базы данных в той же папке
 con = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-con.setDatabaseName('data.sqlite')
+con.setDatabaseName('db_auto_order.sqlite')
 con.open()
 
 query = QtSql.QSqlQuery()
-query.exec("select * from good order by goodname")
-lst =[]
+query.prepare("\
+    insert into spec_region values(\
+        null, :name)\
+")
 
-if query.isActive():
-    query.first()
-    while query.isValid():
-        lst.append(str(query.value('goodname')) + '-' + str(query.value('goodcount')))
-        query.next()
-    
-    for p in lst: print(p)
+lst1 = [0, 1, 2, 3, 4]
+lst2 = ['село', 'посёлок', 'пгт', 'город', 'зато']
+
+
+query.bindValue(':id', lst1)
+query.bindValue(':name', lst2)
+
+query.execBatch()
+
 
 con.close()
- 
