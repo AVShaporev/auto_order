@@ -322,9 +322,10 @@ if 'equipment' not in con.tables():
     ")
 
 
+file_log = 'logs/log_db.txt'
+sys.stdout = open(file_log, 'w', encoding='utf-8')
 for table in con.tables():
     print(f'В таблице {table} {con.record(table).count()} поля(-ей)')
-
 print(f'В БД всего {len(con.tables())} таблиц(-a,-ы)')
 
 con.close()
